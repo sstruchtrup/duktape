@@ -35,6 +35,28 @@ struct duk_bitencoder_ctx {
 };
 
 /*
+ *  Buffer writer (dynamic buffer only)
+ */
+
+struct duk_bufwriter_ctx {
+	duk_uint8_t *limit;
+	duk_size_t offset;
+	duk_size_t length;
+	duk_hbuffer_dynamic *buf;
+};
+
+#define DUK_BW_INIT(thr,bw_ctx,buf) \
+	duk_bw_init((thr),(bw_ctx),(buf))
+#define DUK_BW_GETPTR(thr,bw_ctx) \
+	duk_bw_getptr((thr),(bw_ctx))
+#define DUK_BW_ENSURE(thr,bw_ctx,sz,ptr) \
+	(((duk_size_t) ((bw_ctx)->limit - (ptr)) >= (sz)) ? (ptr) : duk_bw_resize((thr),(bw_ctx),(sz),(ptr)))
+#define DUK_BW_FINISH(thr,bw_ctx,ptr) \
+	duk_bw_finish((thr),(bw_ctx),(ptr))
+#define DUK_BW_COMPACT(thr,bw_ctx) \
+	duk_bw_compact((thr),(bw_ctx))
+
+/*
  *  Externs and prototypes
  */
 
@@ -66,6 +88,12 @@ DUK_INTERNAL_DECL void duk_be_finish(duk_bitencoder_ctx *ctx);
 
 DUK_INTERNAL_DECL duk_uint32_t duk_util_tinyrandom_get_bits(duk_hthread *thr, duk_small_int_t n);
 DUK_INTERNAL_DECL duk_double_t duk_util_tinyrandom_get_double(duk_hthread *thr);
+
+DUK_INTERNAL_DECL void duk_bw_init(duk_hthread *thr, duk_bufwriter_ctx *bw_ctx, duk_hbuffer_dynamic *h_buf);
+DUK_INTERNAL_DECL duk_uint8_t *duk_bw_getptr(duk_hthread *thr, duk_bufwriter_ctx *bw_ctx);
+DUK_INTERNAL_DECL duk_uint8_t *duk_bw_resize(duk_hthread *thr, duk_bufwriter_ctx *bw_ctx, duk_size_t sz, duk_uint8_t *ptr);
+DUK_INTERNAL_DECL void duk_bw_finish(duk_hthread *thr, duk_bufwriter_ctx *bw_ctx, duk_uint8_t *ptr);
+DUK_INTERNAL_DECL void duk_bw_compact(duk_hthread *thr, duk_bufwriter_ctx *bw_ctx);
 
 #if defined(DUK_USE_DEBUGGER_SUPPORT)  /* For now only needed by the debugger. */
 DUK_INTERNAL void duk_byteswap_bytes(duk_uint8_t *p, duk_small_uint_t len);

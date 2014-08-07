@@ -88,6 +88,7 @@ for i in \
 	duk_api_call.c		\
 	duk_api_codec.c		\
 	duk_api_compile.c	\
+	duk_api_bytecode.c	\
 	duk_api_memory.c	\
 	duk_api_object.c	\
 	duk_api_string.c	\
@@ -190,6 +191,7 @@ for i in \
 	duk_util_hashprime.c	\
 	duk_util_misc.c		\
 	duk_util_tinyrandom.c	\
+	duk_util_bufwriter.c	\
 	duk_selftest.c		\
 	duk_selftest.h		\
 	duk_strings.c		\
