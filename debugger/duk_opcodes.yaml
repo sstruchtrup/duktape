@@ -261,8 +261,7 @@ opcodes:
   - name: TRYCATCH
     args:
       - A_H
-      - B_R
-      - C_I  # semantics depend on flags, so dump as integer
+      - BC_I  # either 'with' target register or catch varname constant, so dump as integer
     flags:
       - mask: 0x40
         name: have_catch
