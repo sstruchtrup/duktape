@@ -952,6 +952,9 @@ Planned
   Emscripten fastcomp can now be used and Duktape can run more complex
   Emscripten-compiled programs (e.g. Lua or Duktape itself)
 
+* Internal performance improvement: add a fast path for JSON.stringify(),
+  active when no replacer and no indent used (GH-204)
+
 * Minor change to plain buffer and Duktape.Buffer write coercion for
   consistency with Node.js Buffer and TypeArray, e.g. -Infinity now
   coerces to 0x00 rather than 0xFF
