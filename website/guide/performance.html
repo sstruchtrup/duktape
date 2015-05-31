@@ -456,3 +456,14 @@ function fast(x) {
 <p>Use such optimizations only where it matters, because they often reduce
 code readability.</p>
 
+<h2 id="performance-json-stringify-fastpath">JSON.stringify() fast path</h2>
+
+<p>There's a fast path for <code>JSON.stringify()</code> serialization which
+is used when there is no "replacer" argument and no indent.  The fast path
+assumes that it can serialize the argument value without risking any side
+effects (which might mutate the value being serialized), and will fall back
+to the slower default algorithm if necessary.  This happens at least when:
+(1) any object has a <code>.toJSON()</code> property, and (2) any object
+property is a getter.</p>
+
+<p>See: <a href="https://github.com/svaarala/duktape/blob/master/ecmascript-testcases/test-bi-json-enc-fastpath.js">ecmascript-testcases/test-bi-json-enc-fastpath.js</a>.</p>
