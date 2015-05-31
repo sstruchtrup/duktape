@@ -2282,6 +2282,12 @@ typedef FILE duk_file;
  */
 #define DUK_USE_PREFER_SIZE
 
+/* Fast path for basic JSON.stringify() calls (no replacer, no indent).
+ * Much faster but increases code footprint.
+ */
+#define DUK_USE_JSON_STRINGIFY_FASTPATH
+/*FIXME*/
+
 /*
  *  Tagged type representation (duk_tval)
  */
