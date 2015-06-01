@@ -93,6 +93,10 @@ Suggested feature options
 
   - ``DUK_OPT_NO_REGEXP_SUPPORT``
 
+* Disable ``JSON.stringify()`` fast path if code footprint is an issue:
+
+  - ``#undef DUK_USE_JSON_STRINGIFY_FASTPATH``
+
 * Duktape debug code uses a large, static temporary buffer for formatting
   debug log lines.  If you're running with debugging enabled, use e.g.
   the following to reduce this overhead:
