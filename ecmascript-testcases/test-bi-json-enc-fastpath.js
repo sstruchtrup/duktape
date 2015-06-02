@@ -94,6 +94,38 @@ try {
 }
 
 /*===
+auto unbox test
+0 123
+1 "foo"
+2 true
+3 false
+===*/
+
+/* JSON requires automatic unboxing of the following primitive types:
+ * Number, String, Boolean (E5 Section 15.12.3, Str() algorithm, step 4).
+ */
+
+function jsonStringifyFastPathAutoUnboxTest() {
+    var values = [
+        new Number(123),
+        new String('foo'),
+        new Boolean(true),
+        new Boolean(false)
+    ];
+
+    values.forEach(function (v, i) {
+        print(i, JSON.stringify(v));
+    });
+}
+
+try {
+    print('auto unbox test');
+    jsonStringifyFastPathAutoUnboxTest();
+} catch (e) {
+    print(e.stack || e);
+}
+
+/*===
 abort test
 0 "foobar"
 1 [null]
