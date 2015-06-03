@@ -199,3 +199,53 @@ try {
 } catch (e) {
     print(e.stack || e);
 }
+
+/*===
+inheritance test
+parent foo
+child bar
+{"bar":"child bar"}
+["foo","bar","quux","baz"]
+["foo",null,"quux","baz"]
+["foo","parent-bar","quux","baz"]
+===*/
+
+/* Property inheritance is quite interesting, test for correct behavior. */
+
+function jsonStringifyFastPathInheritanceTest() {
+    var obj1, obj2;
+
+    /* For objects JSON.stringify() only looks at enumerable own properties so
+     * it's very simple.
+     */
+
+    obj1 = { foo: 'parent foo' };
+    obj2 = Object.create(obj1);
+    obj2.bar = 'child bar';
+    print(obj2.foo);
+    print(obj2.bar);
+    print(JSON.stringify(obj2));
+
+    /* For arrays JSON.stringify() uses the [[Get]] operation which -does-
+     * inherit through array gaps.  Ensure that works correctly.
+     */
+    obj1 = [ 'foo', 'bar', 'quux', 'baz' ];
+    print(JSON.stringify(obj1));
+
+    // create gap, nothing inherited
+    delete obj1[1];
+    print(JSON.stringify(obj1));
+
+    // inherit something through the gap
+    Array.prototype[1] = 'parent-bar';
+    print(JSON.stringify(obj1));
+
+    delete Array.prototype[1];  // restore sanity
+}
+
+try {
+    print('inheritance test');
+    jsonStringifyFastPathInheritanceTest();
+} catch (e) {
+    print(e.stack || e);
+}
