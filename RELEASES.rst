@@ -956,6 +956,9 @@ Planned
   consistency with Node.js Buffer and TypeArray, e.g. -Infinity now
   coerces to 0x00 rather than 0xFF
 
+* Add duk_dump_function() and duk_load_function() API calls which provide
+  bytecode dump/load support (GH-27)
+
 * Add duk_instanceof() API call (GH-148)
 
 * Add duk_steal_buffer() API call which allows user code to steal the current
