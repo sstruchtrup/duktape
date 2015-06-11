@@ -1,0 +1,22 @@
+name: duk_trim
+
+proto: |
+  void duk_load_function(duk_context *ctx);
+
+stack: |
+  [ ... bytecode! ... ] -> [ ... function! ... ]
+
+summary: |
+  <p>FIXME</p>
+
+example: |
+  /* FIXME */
+
+tags:
+  - stack
+  - bytecode
+
+seealso:
+  - duk_dump_function
+
+introduced: 1.3.0
